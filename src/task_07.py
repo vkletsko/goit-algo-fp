@@ -33,7 +33,7 @@ def plot_probabilities(probabilities):
 
 
 if __name__ == "__main__":
-    num_simulations = 10000000
+    num_simulations = 1000000
 
     probabilities = simulate_dice_rolls_numpy(num_simulations)
 

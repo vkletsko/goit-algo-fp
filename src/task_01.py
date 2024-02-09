@@ -20,6 +20,19 @@ class LinkedList:
 
         self.head = prev_node
 
+    def insert(self, new_node):
+        if not self.head:
+            new_node.next = self.head
+            self.head = new_node
+            return
+
+        current_node = self.head
+        while current_node.next:
+            current_node = current_node.next
+
+        new_node.next = current_node.next
+        current_node.next = new_node
+
     def sorted_insert(self, new_node):
         if not self.head or self.head.data >= new_node.data:
             new_node.next = self.head
@@ -63,6 +76,35 @@ class LinkedList:
             current_node = current_node.next
         print()
 
+    # Cортування вставками
+    def insertion_sort(self):
+        if not self.head or not self.head.next:
+            return
+
+        sorted_head = None
+        current_node = self.head
+
+        while current_node:
+            next_node = current_node.next
+            sorted_head = self.insertion_sorted_insert(
+                sorted_head, current_node)
+            current_node = next_node
+
+        self.head = sorted_head
+
+    def insertion_sorted_insert(self, sorted_head, new_node):
+        if not sorted_head or sorted_head.data >= new_node.data:
+            new_node.next = sorted_head
+            return new_node
+
+        current_node = sorted_head
+        while current_node.next and current_node.next.data < new_node.data:
+            current_node = current_node.next
+
+        new_node.next = current_node.next
+        current_node.next = new_node
+        return sorted_head
+
 
 if __name__ == "__main__":
     # Створення першого відсортованного списку
@@ -95,3 +137,18 @@ if __name__ == "__main__":
     merged_list = linked_list.merge_sorted_lists(linked_list2)
     print("Після об'єднання двох відсортованих списків в один відсортований:")
     merged_list.display()
+
+    # Створення другого відсортованного списку
+    linked_list3 = LinkedList()
+    linked_list3.insert(Node(7))
+    linked_list3.insert(Node(4))
+    linked_list3.insert(Node(8))
+    linked_list3.insert(Node(1))
+    linked_list3.insert(Node(6))
+
+    print("Третій не відсортований список:")
+    linked_list3.display()
+
+    linked_list3.insertion_sort()
+    print("Ітоговий список після сортовання вставками:")
+    linked_list3.display()
